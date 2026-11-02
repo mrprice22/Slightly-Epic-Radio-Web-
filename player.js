@@ -5,7 +5,13 @@
 //   theme=light|dark|auto       (default auto)
 //   accent=<hex>                e.g. ?accent=ff6a3d
 //   size=slim                   one-row docked bar (~54px) for site-wide embeds
+//   frame=none                  no panel background, border or outer padding, so
+//                               the player blends into the host page (e.g. a nav bar)
 //   resume=0                    don't carry playback over to the next page load
+//
+// Messages to the embedding page (window.parent.postMessage):
+//   {type: 'slightly-epic-radio:height', height}   on every size change
+//   {type: 'slightly-epic-radio:state', state}     idle | loading | playing | resume | error
 //
 // Starting station, first match wins: resume handoff → station= → the visitor's
 // last station → default= → first station.
@@ -67,6 +73,7 @@
   var SLIM = params.get('size') === 'slim';
   if (SLIM) document.documentElement.setAttribute('data-size', 'slim');
   var narrowMQ = window.matchMedia ? window.matchMedia('(max-width: 439px)') : { matches: false };
+  if (params.get('frame') === 'none') document.documentElement.setAttribute('data-frame', 'none');
 
   // ── theme / accent ───────────────────────────────────────────────────────
   var theme = params.get('theme');
@@ -78,7 +85,15 @@
 
   // ── helpers ──────────────────────────────────────────────────────────────
   function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
-  function setState(s) { player.dataset.state = s; }
+  // The embedding page may show its own indicator (e.g. a collapsed note icon
+  // that glows while music plays), so every state change is posted up too.
+  var EMBEDDED = window.parent !== window;
+  function setState(s) {
+    player.dataset.state = s;
+    if (EMBEDDED) {
+      try { window.parent.postMessage({ type: 'slightly-epic-radio:state', state: s }, '*'); } catch (_) {}
+    }
+  }
 
   function streamSrc(st, viaProxy) {
     var direct = /^https:/i.test(st.streamUrl);

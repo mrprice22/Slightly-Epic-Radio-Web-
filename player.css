@@ -231,6 +231,14 @@ input[type="range"]:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 4px var(
   :root[data-size="slim"] .player.vol-open .mute { color: var(--accent); }
 }
 
+/* ── frame=none: no panel, so the player sits inside the host page's own bar ── */
+:root[data-frame="none"] .player {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 4px 6px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .player[data-state="resume"] .play { animation: none; box-shadow: 0 0 0 3px var(--focus); }
   .np-track.scroll span, .eq i { animation: none; }

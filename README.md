@@ -15,12 +15,14 @@ Demo and embed code: **https://mrprice22.github.io/Slightly-Epic-Radio-Web-/**
 
 - At 440px wide or more, the player is one row and `height="84"` fits. Narrower embeds put the volume slider on its own row, so they need `height="124"`.
 - Instead of a fixed height, you can use the auto-height snippet on the demo page. The player posts its height to the parent page as `{type: 'slightly-epic-radio:height', height}`.
+- The player also posts every playback state change as `{type: 'slightly-epic-radio:state', state}`, where `state` is `idle`, `loading`, `playing`, `resume` or `error`. A site can use it for its own indicator, such as a minimized icon that glows while music plays.
 
 | URL parameter | Example | Effect |
 |---|---|---|
 | `default` | `?default=zen-garden` or `?default=15` | Starting station for **first-time** visitors (title slug or id). Returning visitors get the station they last listened to. |
 | `station` | `?station=zen-garden` | **Forces** the starting station, even over the visitor's last station. |
 | `size` | `?size=slim` | One-row 54px bar for docking along the bottom of every page of a site. Below 440px wide, the speaker button swaps the station line for the volume slider. |
+| `frame` | `?frame=none` | No panel background, border or outer padding, so the player blends into the host page's own bar (e.g. inside a site's nav menu). |
 | `resume` | `?resume=0` | Turns off carrying playback over to the next page load (on by default). |
 | `theme` | `?theme=dark` | `light`, `dark` or `auto` (the default, which follows the visitor's system setting). |
 | `accent` | `?accent=c8a045` | Hex accent color. |
