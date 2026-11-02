@@ -60,7 +60,8 @@ footer { margin-top: 48px; color: var(--text2); font-size: 13px; }
 
   <div class="demo-row">
     <iframe class="slightly-epic-radio" src="player.html" height="84" title="Slightly Epic Radio player" allow="autoplay; encrypted-media" loading="lazy"></iframe>
-    <iframe class="slightly-epic-radio narrow" src="player.html?theme=dark" height="124" title="Slightly Epic Radio player (narrow, dark)" allow="autoplay; encrypted-media" loading="lazy"></iframe>
+    <iframe class="slightly-epic-radio narrow" src="player.html?theme=dark" height="124" style="color-scheme:dark" title="Slightly Epic Radio player (narrow, dark)" allow="autoplay; encrypted-media" loading="lazy"></iframe>
+    <iframe class="slightly-epic-radio" src="player.html?size=slim&amp;theme=dark&amp;accent=c8a045" height="54" style="color-scheme:dark" title="Slightly Epic Radio player (slim bar)" allow="autoplay; encrypted-media" loading="lazy"></iframe>
   </div>
 
   <h2>Embed it</h2>
@@ -81,10 +82,16 @@ addEventListener('message', function (e) {
   <h2>Options</h2>
   <table>
     <tr><th>Parameter</th><th>Example</th><th>What it does</th></tr>
-    <tr><td><code>station</code></td><td><code>?station=zen-garden</code></td><td>Starting station, by title (lowercase, dashes) or id. Otherwise the viewer's last station is used.</td></tr>
+    <tr><td><code>default</code></td><td><code>?default=zen-garden</code></td><td>Starting station for <em>first-time</em> visitors, by title (lowercase, dashes) or id. Returning visitors get the station they last listened to.</td></tr>
+    <tr><td><code>station</code></td><td><code>?station=zen-garden</code></td><td>Forces the starting station, even over the visitor's last station.</td></tr>
+    <tr><td><code>size</code></td><td><code>?size=slim</code></td><td>One-row 54px bar for docking along the bottom of every page of a site.</td></tr>
+    <tr><td><code>resume</code></td><td><code>?resume=0</code></td><td>Turns off carrying playback over to the next page (on by default; see below).</td></tr>
     <tr><td><code>theme</code></td><td><code>?theme=dark</code></td><td><code>light</code>, <code>dark</code> or <code>auto</code> (follows the visitor's system, default).</td></tr>
     <tr><td><code>accent</code></td><td><code>?accent=ff6a3d</code></td><td>Hex color for the play button, slider and equaliser.</td></tr>
   </table>
+
+  <h2>Multi-page sites</h2>
+  <p style="color:var(--text2);font-size:14px;margin-top:0">If a visitor is listening when they click to another page, the player on the next page picks the same station back up. In Chrome and Edge it resumes on its own after a second or so. Firefox and Safari don't allow automatic sound, so the player keeps the station selected and shows <em>Tap ▶ to keep listening</em>. Pausing before leaving means it stays paused. Only one player plays at a time, so starting it in another tab stops the first.</p>
 
   <h2>Stations</h2>
   <div class="stations" id="stations"></div>

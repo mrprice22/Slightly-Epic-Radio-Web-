@@ -9,6 +9,7 @@
   --accent-ink: #ffffff;
   --track: #dcd9ee;
   --focus: rgba(124, 106, 247, .45);
+  --focus: color-mix(in srgb, var(--accent) 45%, transparent); /* follows ?accent= */
   --radius: 14px;
   color-scheme: light;
 }
@@ -183,7 +184,55 @@ input[type="range"]:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 4px var(
   input[type="range"] { flex: 1; width: auto; }
 }
 
+/* ── resume prompt (autoplay blocked after a page change) ── */
+.player[data-state="resume"] .np { color: var(--accent); font-weight: 700; }
+.player[data-state="resume"] .play { animation: pulse 1.6s ease-in-out infinite; }
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--focus); }
+  50%      { box-shadow: 0 0 0 7px transparent; }
+}
+
+/* ── size=slim: one-row docked bar (~54px) ── */
+:root[data-size="slim"] .player {
+  grid-template-columns: 36px minmax(0, 1fr) 36px auto;
+  gap: 10px;
+  min-height: 0;
+  padding: 8px 14px 8px 10px;
+  border-width: 1px 0 0 0;
+  border-radius: 0;
+}
+:root[data-size="slim"] .art { width: 36px; height: 36px; border-radius: 7px; }
+:root[data-size="slim"] .art-ph { width: 20px; height: 20px; }
+:root[data-size="slim"] .info { gap: 1px; }
+:root[data-size="slim"] .select-wrap { max-width: 340px; } /* keep the ▾ near the name on wide bars */
+:root[data-size="slim"] select { font-size: 13.5px; padding-top: 1px; padding-bottom: 1px; }
+:root[data-size="slim"] .np { font-size: 11.5px; gap: 6px; }
+:root[data-size="slim"] .eq { height: 9px; }
+:root[data-size="slim"] .play { width: 36px; height: 36px; }
+:root[data-size="slim"] .play svg { width: 18px; height: 18px; }
+:root[data-size="slim"] input[type="range"] { width: 84px; }
+
+@media (max-width: 439px) {
+  /* stay one row: the speaker swaps the info column for the slider */
+  :root[data-size="slim"] .player {
+    grid-template-columns: 36px minmax(0, 1fr) 36px 30px;
+    grid-template-areas: "art info play vol";
+    row-gap: 0;
+  }
+  :root[data-size="slim"] .vol { padding: 0; }
+  :root[data-size="slim"] .player:not(.vol-open) input[type="range"] { display: none; }
+  :root[data-size="slim"] .player.vol-open {
+    grid-template-columns: 36px minmax(0, 1fr) 36px;
+    grid-template-areas: "art vol play";
+  }
+  :root[data-size="slim"] .player.vol-open .info { display: none; }
+  :root[data-size="slim"] .player.vol-open .vol { min-width: 0; }
+  :root[data-size="slim"] .player.vol-open input[type="range"] { flex: 1; width: auto; }
+  :root[data-size="slim"] .player.vol-open .mute { color: var(--accent); }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .player[data-state="resume"] .play { animation: none; box-shadow: 0 0 0 3px var(--focus); }
   .np-track.scroll span, .eq i { animation: none; }
   .np-track.scroll { -webkit-mask-image: none; mask-image: none; }
   .np-track.scroll b + b { display: none; }

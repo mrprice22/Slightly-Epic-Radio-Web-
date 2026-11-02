@@ -18,11 +18,31 @@ Demo and embed code: **https://mrprice22.github.io/Slightly-Epic-Radio-Web-/**
 
 | URL parameter | Example | Effect |
 |---|---|---|
-| `station` | `?station=zen-garden` or `?station=15` | Starting station, as a title slug or an id. Without it, the player uses the visitor's last station, then the first station. |
+| `default` | `?default=zen-garden` or `?default=15` | Starting station for **first-time** visitors (title slug or id). Returning visitors get the station they last listened to. |
+| `station` | `?station=zen-garden` | **Forces** the starting station, even over the visitor's last station. |
+| `size` | `?size=slim` | One-row 54px bar for docking along the bottom of every page of a site. Below 440px wide, the speaker button swaps the station line for the volume slider. |
+| `resume` | `?resume=0` | Turns off carrying playback over to the next page load (on by default). |
 | `theme` | `?theme=dark` | `light`, `dark` or `auto` (the default, which follows the visitor's system setting). |
-| `accent` | `?accent=ff6a3d` | Hex accent color. |
+| `accent` | `?accent=c8a045` | Hex accent color. |
 
-The player remembers each visitor's last station and volume in their browser's localStorage.
+**Which station it starts on:** the first of these that applies wins:
+1. Playback carried over from the previous page
+2. `station=`
+3. The visitor's last station
+4. `default=`
+5. The first station
+
+The visitor's station and volume live in the player's localStorage. Browsers keep an embedded player's storage separately for each site it's embedded on, so each of your sites remembers its own visitors' choice. No cookies are involved.
+
+### Multi-page sites
+
+On a site where every link loads a new page, the player in the new page is a fresh copy. So it hands playback over:
+
+- **Leaving a page while playing:** the player leaves a short-lived note (15 seconds) in localStorage. The player on the next page takes it and starts the same station. Pausing before leaving clears it.
+- **Chrome and Edge:** the link click counts as the visitor's permission for sound, and the iframe's `allow="autoplay"` passes it on, so playback resumes on its own after about a second. Tested headless with Chrome's real autoplay policy: it resumed in 0.8-1.2s.
+- **Firefox, Safari, or anywhere sound is blocked:** the station stays selected, the play button pulses, and the line reads *Tap ▶ to keep listening*.
+- **Only one player plays at a time** across tabs and frames on the same site (via `BroadcastChannel`).
+- **Truly gap-free playback** needs the site itself to swap page content without reloading, so the player is never reloaded. See [`docs/homerslotr-embed.md`](docs/homerslotr-embed.md).
 
 ## How it fits together
 

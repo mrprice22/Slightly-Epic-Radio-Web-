@@ -1,8 +1,14 @@
 // Slightly Epic Radio — embeddable player
 // URL params (all optional):
-//   station=<id | title-slug>   e.g. ?station=zen-garden
+//   station=<id | title-slug>   force the starting station, e.g. ?station=zen-garden
+//   default=<id | title-slug>   starting station for first-time visitors only
 //   theme=light|dark|auto       (default auto)
 //   accent=<hex>                e.g. ?accent=ff6a3d
+//   size=slim                   one-row docked bar (~54px) for site-wide embeds
+//   resume=0                    don't carry playback over to the next page load
+//
+// Starting station, first match wins: resume handoff → station= → the visitor's
+// last station → default= → first station.
 (function () {
   'use strict';
 
@@ -27,7 +33,40 @@
   var store = {
     get: function (k) { try { return localStorage.getItem('ser.' + k); } catch (_) { return null; } },
     set: function (k, v) { try { localStorage.setItem('ser.' + k, v); } catch (_) {} },
+    remove: function (k) { try { localStorage.removeItem('ser.' + k); } catch (_) {} },
   };
+
+  // ── resume across page loads ─────────────────────────────────────────────
+  // A multi-page site reloads this iframe on every click. While playing, the
+  // unloading page leaves a short-lived "handoff"; the next page load takes it
+  // and carries on with the same station. Pausing never leaves one.
+  var RESUME = params.get('resume') !== '0';
+  var HANDOFF_MAX_AGE_MS = 15000;
+  var resumeAttempt = false;
+
+  function takeHandoff() {
+    var raw = store.get('handoff');
+    if (!raw) return null;
+    store.remove('handoff'); // consume first, so only one page can take it
+    try {
+      var h = JSON.parse(raw);
+      if (h && h.streamUrl && Date.now() - h.at < HANDOFF_MAX_AGE_MS) return h;
+    } catch (_) {}
+    return null;
+  }
+
+  // One player at a time across tabs/frames on the same site.
+  var instanceId = Math.random().toString(36).slice(2);
+  var channel = null;
+  try { channel = new BroadcastChannel('slightly-epic-radio'); } catch (_) {}
+  if (channel) channel.onmessage = function (e) {
+    if (e.data && e.data.type === 'playing' && e.data.from !== instanceId && wantPlaying) stop();
+  };
+
+  // ── size ─────────────────────────────────────────────────────────────────
+  var SLIM = params.get('size') === 'slim';
+  if (SLIM) document.documentElement.setAttribute('data-size', 'slim');
+  var narrowMQ = window.matchMedia ? window.matchMedia('(max-width: 439px)') : { matches: false };
 
   // ── theme / accent ───────────────────────────────────────────────────────
   var theme = params.get('theme');
@@ -73,15 +112,21 @@
       .then(function (data) { stations = (data.stations || []).filter(function (s) { return s.streamUrl; }); });
   }
 
+  function findStation(key) {
+    if (!key) return null;
+    return stations.find(function (s) { return String(s.id) === key; })
+        || stations.find(function (s) { return slug(s.title) === slug(key); })
+        || null;
+  }
+  function byStream(url) {
+    return url ? stations.find(function (s) { return s.streamUrl === url; }) || null : null;
+  }
+
   function pickInitial() {
-    var want = params.get('station');
-    if (want) {
-      var byId = stations.find(function (s) { return String(s.id) === want; });
-      var bySlug = stations.find(function (s) { return slug(s.title) === slug(want); });
-      if (byId || bySlug) return byId || bySlug;
-    }
-    var saved = store.get('station'); // stored by stream URL: ids shift when reordered
-    return stations.find(function (s) { return s.streamUrl === saved; }) || stations[0];
+    return findStation(params.get('station'))
+        || byStream(store.get('station'))   // stored by stream URL: ids shift when reordered
+        || findStation(params.get('default'))
+        || stations[0];
   }
 
   function renderSelect() {
@@ -113,18 +158,33 @@
     if (!current) return;
     wantPlaying = true;
     triedProxy = false;
+    store.set('station', current.streamUrl); // "last listened to", even if never re-picked
     setState('loading');
     setNowPlaying('Connecting…');
     audio.src = streamSrc(current, false);
     var p = audio.play();
     if (p && p.catch) p.catch(function (err) {
-      if (err && err.name === 'NotAllowedError') { stop(); return; }
+      if (err && err.name === 'NotAllowedError') {
+        // Browser refused autoplay (Firefox/Safari, or no user activation).
+        if (resumeAttempt) { resumeAttempt = false; askToResume(); } else stop();
+        return;
+      }
       // other failures surface through the 'error' event
     });
   }
 
+  // Autoplay was blocked while carrying playback over from the previous page:
+  // keep the station selected and ask for one tap.
+  function askToResume() {
+    stop();
+    setState('resume');
+    setNowPlaying('Tap ▶ to keep listening');
+    playBtn.setAttribute('aria-label', 'Resume ' + current.title);
+  }
+
   function stop() {
     wantPlaying = false;
+    store.remove('handoff');
     // Drop the connection entirely: a paused live stream keeps downloading,
     // and resuming would play stale audio.
     audio.pause();
@@ -140,6 +200,8 @@
 
   audio.addEventListener('playing', function () {
     if (!wantPlaying) return;
+    resumeAttempt = false;
+    if (channel) channel.postMessage({ type: 'playing', from: instanceId });
     setState('playing');
     playBtn.setAttribute('aria-pressed', 'true');
     playBtn.setAttribute('aria-label', 'Pause');
@@ -177,7 +239,21 @@
     if (wasPlaying) { stopMeta(); npFull = ''; }
     showStation(st);
     if (wasPlaying) start();
-    else if (player.dataset.state === 'error') { setState('idle'); setNowPlaying(idleText()); }
+    else if (player.dataset.state === 'error' || player.dataset.state === 'resume') {
+      setState('idle'); setNowPlaying(idleText());
+      playBtn.setAttribute('aria-label', 'Play');
+    }
+  });
+
+  // Leaving the page while playing → hand off to the next page load.
+  window.addEventListener('pagehide', function () {
+    if (RESUME && wantPlaying && current) {
+      store.set('handoff', JSON.stringify({ at: Date.now(), streamUrl: current.streamUrl }));
+    }
+  });
+  // Restored from the back/forward cache: the handoff we left is stale now.
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted) store.remove('handoff');
   });
 
   // ── now playing ──────────────────────────────────────────────────────────
@@ -246,10 +322,26 @@
     if (v > 0) lastVolume = v;
     if (save) store.set('volume', String(v));
   }
-  vol.addEventListener('input', function () { applyVolume(Number(vol.value), true); });
+  // Narrow slim bar: no room for a slider, so the speaker swaps the station/
+  // now-playing column for the volume slider, and swaps back after 4s idle.
+  var volCloseTimer = null;
+  function narrowSlim() { return SLIM && narrowMQ.matches; }
+  function setVolOpen(open) {
+    clearTimeout(volCloseTimer);
+    player.classList.toggle('vol-open', open);
+    muteBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) volCloseTimer = setTimeout(function () { setVolOpen(false); }, 4000);
+  }
+
+  vol.addEventListener('input', function () {
+    applyVolume(Number(vol.value), true);
+    if (player.classList.contains('vol-open')) setVolOpen(true); // restart the idle timer
+  });
   muteBtn.addEventListener('click', function () {
+    if (narrowSlim()) { setVolOpen(!player.classList.contains('vol-open')); return; }
     applyVolume(Number(vol.value) === 0 ? (lastVolume || 80) : 0, true);
   });
+  if (narrowMQ.addEventListener) narrowMQ.addEventListener('change', function () { setVolOpen(false); });
 
   // ── report height to the embedding page (optional auto-resize) ───────────
   if (window.parent !== window && 'ResizeObserver' in window) {
@@ -262,10 +354,14 @@
   var savedVol = Number(store.get('volume'));
   applyVolume(store.get('volume') !== null && !isNaN(savedVol) ? savedVol : 80, false);
 
+  var handoff = RESUME ? takeHandoff() : null;
+
   loadStations().then(function () {
     if (!stations.length) throw new Error('empty');
     renderSelect();
-    showStation(pickInitial());
+    var resumeStation = handoff && byStream(handoff.streamUrl);
+    showStation(resumeStation || pickInitial());
+    if (resumeStation) { resumeAttempt = true; start(); }
   }).catch(function () {
     sel.textContent = '';
     var o = document.createElement('option'); o.textContent = 'Stations unavailable'; sel.appendChild(o);
