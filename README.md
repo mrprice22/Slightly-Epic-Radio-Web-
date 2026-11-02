@@ -84,14 +84,14 @@ Then open http://127.0.0.1:8080/. `config.js` detects localhost and points at th
 
 ## Known station issues (checked 2026-11-01)
 
-These are failing at the source, so they fail in the Android and Roku apps too. The player shows "Station offline — try another".
+These stations are failing at the source. They're switched **off** in the Station Manager: they stay in the Manager's list but are left out of `stations.json` and hidden in the Android and Roku apps. Tick **Active** in the Manager to bring one back.
 
-| Station | Problem |
-|---|---|
-| K.G.L.W. Bootlegger | Stream returns 404; `gizzradio.live/listen/listen/status-json.xsl` now serves a GitHub Pages 404 |
-| Badlands Classic Rock | `ec3.yesstreaming.net:2040` is not reachable |
-| SOL FM | `radiosolfm.bounceme.net:8002` is not reachable |
-| Alternative | Stream works; metadata URL `…/7.html` returns "Mount not found", so it shows the station name only |
+| Station | Problem | Status |
+|---|---|---|
+| K.G.L.W. Bootlegger | Stream returns 404; `gizzradio.live/listen/listen/status-json.xsl` now serves a GitHub Pages 404 | Off |
+| Badlands Classic Rock | `ec3.yesstreaming.net:2040` is down (Cloudflare error 521 from the Worker) | Off |
+| SOL FM | `radiosolfm.bounceme.net:8002` is not reachable | Off |
+| Alternative | Stream works; metadata URL `…/7.html` returns "Mount not found", so it shows the station name only | Active |
 
 ## Bandwidth note
 

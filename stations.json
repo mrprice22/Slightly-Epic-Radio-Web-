@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-02T01:33:36.046Z",
+  "updated": "2026-11-02T02:32:21.728Z",
   "stations": [
     {
       "id": 0,
@@ -9,15 +9,6 @@
       "streamFormat": "mp3",
       "logo": "logos/slightly_epic_mashups.jpg",
       "metaUrl": "https://a6.asurahosting.com:6520/status-json.xsl",
-      "metaType": "icecast"
-    },
-    {
-      "id": 1,
-      "title": "K.G.L.W. Bootlegger",
-      "streamUrl": "https://gizzradio.live/listen/listen/radio.mp3",
-      "streamFormat": "mp3",
-      "logo": "logos/kglw_bootlegger.png",
-      "metaUrl": "https://gizzradio.live/listen/listen/status-json.xsl",
       "metaType": "icecast"
     },
     {
@@ -57,15 +48,6 @@
       "metaType": "icecast"
     },
     {
-      "id": 6,
-      "title": "Badlands Classic Rock",
-      "streamUrl": "http://ec3.yesstreaming.net:2040/stream",
-      "streamFormat": "aac",
-      "logo": "logos/badlands_classic_rock.jpg",
-      "metaUrl": "http://ec3.yesstreaming.net:2040/status-json.xsl",
-      "metaType": "icecast"
-    },
-    {
       "id": 7,
       "title": "UTurn Classic Rock",
       "streamUrl": "http://listen.uturnradio.com:7000/classic_rock",
@@ -90,15 +72,6 @@
       "streamFormat": "mp3",
       "logo": "logos/stacey_radio.jpg",
       "metaUrl": "http://stacey-campbell.com:8001/status-json.xsl",
-      "metaType": "icecast"
-    },
-    {
-      "id": 10,
-      "title": "SOL FM",
-      "streamUrl": "http://radiosolfm.bounceme.net:8002/solfm",
-      "streamFormat": "aac",
-      "logo": "logos/sol_fm.jpg",
-      "metaUrl": "http://radiosolfm.bounceme.net:8002/status-json.xsl",
       "metaType": "icecast"
     },
     {
