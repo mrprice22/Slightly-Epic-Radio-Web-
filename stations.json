@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-02T02:32:21.728Z",
+  "updated": "2026-11-02T02:35:56.996Z",
   "stations": [
     {
       "id": 0,
@@ -145,6 +145,33 @@
       "logo": "logos/radio_popolare_milano.png",
       "metaUrl": null,
       "metaType": "none"
+    },
+    {
+      "id": 19,
+      "title": "Spooky Audio Machine",
+      "streamUrl": "https://stream.homerslotr.com/spooky",
+      "streamFormat": "mp3",
+      "logo": "logos/spooky_audio_machine.png",
+      "metaUrl": "https://stream.homerslotr.com/status-json.xsl?mount=/spooky",
+      "metaType": "icecast"
+    },
+    {
+      "id": 20,
+      "title": "Thursday Game Night",
+      "streamUrl": "https://stream.homerslotr.com/mlg",
+      "streamFormat": "mp3",
+      "logo": "logos/thursday_game_night.png",
+      "metaUrl": "https://stream.homerslotr.com/status-json.xsl?mount=/mlg",
+      "metaType": "icecast"
+    },
+    {
+      "id": 21,
+      "title": "PAC-MAN Audio Chaos",
+      "streamUrl": "https://stream.homerslotr.com/pacman",
+      "streamFormat": "mp3",
+      "logo": "logos/pacman_audio_chaos.png",
+      "metaUrl": "https://stream.homerslotr.com/status-json.xsl?mount=/pacman",
+      "metaType": "icecast"
     }
   ]
 }
