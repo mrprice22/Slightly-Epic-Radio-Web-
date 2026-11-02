@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "updated": "2026-11-02T02:41:07.394Z",
+  "updated": "2026-11-02T02:50:42.270Z",
   "stations": [
     {
       "id": 0,
-      "title": "Slightly Epic Mashups",
+      "title": "Todd's Rockn'Blues",
       "streamUrl": "https://a6.asurahosting.com:6520/radio.mp3",
       "streamFormat": "mp3",
       "logo": "logos/slightly_epic_mashups.jpg",
