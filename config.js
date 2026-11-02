@@ -8,7 +8,7 @@
   window.SER_CONFIG = {
     PROXY_BASE: local
       ? 'http://127.0.0.1:8787'
-      : 'https://slightly-epic-radio-proxy.REPLACE-ME.workers.dev',
+      : 'https://slightly-epic-radio-proxy.jamesprice-slightlyepic.workers.dev',
     META_POLL_MS: 20000, // same interval as the Android app
   };
 })();
