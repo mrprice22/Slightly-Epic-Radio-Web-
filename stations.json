@@ -1,0 +1,177 @@
+{
+  "version": 1,
+  "updated": "2026-11-02T01:33:36.046Z",
+  "stations": [
+    {
+      "id": 0,
+      "title": "Slightly Epic Mashups",
+      "streamUrl": "https://a6.asurahosting.com:6520/radio.mp3",
+      "streamFormat": "mp3",
+      "logo": "logos/slightly_epic_mashups.jpg",
+      "metaUrl": "https://a6.asurahosting.com:6520/status-json.xsl",
+      "metaType": "icecast"
+    },
+    {
+      "id": 1,
+      "title": "K.G.L.W. Bootlegger",
+      "streamUrl": "https://gizzradio.live/listen/listen/radio.mp3",
+      "streamFormat": "mp3",
+      "logo": "logos/kglw_bootlegger.png",
+      "metaUrl": "https://gizzradio.live/listen/listen/status-json.xsl",
+      "metaType": "icecast"
+    },
+    {
+      "id": 2,
+      "title": "EDM Techno Forever",
+      "streamUrl": "http://ec1.yesstreaming.net:3500/stream",
+      "streamFormat": "mp3",
+      "logo": "logos/edm_techno_forever.jpg",
+      "metaUrl": "http://ec1.yesstreaming.net:3500/status-json.xsl",
+      "metaType": "icecast"
+    },
+    {
+      "id": 3,
+      "title": "Electronic Dance Radio",
+      "streamUrl": "http://mpc1.mediacp.eu:18000/stream",
+      "streamFormat": "mp3",
+      "logo": "logos/edr.jpg",
+      "metaUrl": "http://mpc1.mediacp.eu:18000/status-json.xsl",
+      "metaType": "icecast"
+    },
+    {
+      "id": 4,
+      "title": "Classical Public Domain Radio",
+      "streamUrl": "http://relay.publicdomainradio.org/classical.mp3",
+      "streamFormat": "mp3",
+      "logo": "logos/classical_public_domain_radio.jpg",
+      "metaUrl": null,
+      "metaType": "none"
+    },
+    {
+      "id": 5,
+      "title": "The Epic Channel",
+      "streamUrl": "http://fra-pioneer08.dedicateware.com:1100/stream",
+      "streamFormat": "mp3",
+      "logo": "logos/the_epic_channel.jpg",
+      "metaUrl": "http://fra-pioneer08.dedicateware.com:1100/status-json.xsl",
+      "metaType": "icecast"
+    },
+    {
+      "id": 6,
+      "title": "Badlands Classic Rock",
+      "streamUrl": "http://ec3.yesstreaming.net:2040/stream",
+      "streamFormat": "aac",
+      "logo": "logos/badlands_classic_rock.jpg",
+      "metaUrl": "http://ec3.yesstreaming.net:2040/status-json.xsl",
+      "metaType": "icecast"
+    },
+    {
+      "id": 7,
+      "title": "UTurn Classic Rock",
+      "streamUrl": "http://listen.uturnradio.com:7000/classic_rock",
+      "streamFormat": "mp3",
+      "logo": "logos/uturn_classic_rock.jpg",
+      "metaUrl": "http://listen.uturnradio.com:7000/status-json.xsl",
+      "metaType": "icecast"
+    },
+    {
+      "id": 8,
+      "title": "Alternative",
+      "streamUrl": "http://stream.xrm.fm:8000/xrm-alt.aac",
+      "streamFormat": "aac",
+      "logo": "logos/alternative.jpg",
+      "metaUrl": "http://stream.xrm.fm:8000/7.html",
+      "metaType": "shoutcast"
+    },
+    {
+      "id": 9,
+      "title": "Stacey Radio",
+      "streamUrl": "http://stacey-campbell.com:8001/dadradio.mp3",
+      "streamFormat": "mp3",
+      "logo": "logos/stacey_radio.jpg",
+      "metaUrl": "http://stacey-campbell.com:8001/status-json.xsl",
+      "metaType": "icecast"
+    },
+    {
+      "id": 10,
+      "title": "SOL FM",
+      "streamUrl": "http://radiosolfm.bounceme.net:8002/solfm",
+      "streamFormat": "aac",
+      "logo": "logos/sol_fm.jpg",
+      "metaUrl": "http://radiosolfm.bounceme.net:8002/status-json.xsl",
+      "metaType": "icecast"
+    },
+    {
+      "id": 11,
+      "title": "Chill Lounge",
+      "streamUrl": "http://harddanceradio.ddns.is74.ru:8000/lounge",
+      "streamFormat": "aac",
+      "logo": "logos/chill_lounge_radio.jpg",
+      "metaUrl": "http://harddanceradio.ddns.is74.ru:8000/status-json.xsl",
+      "metaType": "icecast"
+    },
+    {
+      "id": 12,
+      "title": "Time 2 Chill Radio",
+      "streamUrl": "http://ec6.yesstreaming.net:3610/stream",
+      "streamFormat": "mp3",
+      "logo": "logos/time_2_chill_radio.jpg",
+      "metaUrl": "http://ec6.yesstreaming.net:3610/status-json.xsl",
+      "metaType": "icecast"
+    },
+    {
+      "id": 13,
+      "title": "Ultimate Chill (Pop)",
+      "streamUrl": "http://ec1.yesstreaming.net:3290/stream",
+      "streamFormat": "mp3",
+      "logo": "logos/ultimate_chill_radio.jpg",
+      "metaUrl": "http://ec1.yesstreaming.net:3290/status-json.xsl",
+      "metaType": "icecast"
+    },
+    {
+      "id": 14,
+      "title": "The Jazz Groove",
+      "streamUrl": "https://audio-edge-es6pf.mia.g.radiomast.io/8a384ff3-6fd1-4e5d-b47d-0cbefeffe8d7",
+      "streamFormat": "mp3",
+      "logo": "logos/the_jazz_groove.png",
+      "metaUrl": null,
+      "metaType": "none"
+    },
+    {
+      "id": 15,
+      "title": "Zen Garden",
+      "streamUrl": "https://kathy.torontocast.com:3250/stream",
+      "streamFormat": "mp3",
+      "logo": "logos/zen_garden.jpg",
+      "metaUrl": "https://kathy.torontocast.com:3250/status-json.xsl",
+      "metaType": "icecast"
+    },
+    {
+      "id": 16,
+      "title": "Synthetic FM",
+      "streamUrl": "http://stream.syntheticfm.com:8040/live",
+      "streamFormat": "mp3",
+      "logo": "logos/synthetic_fm.png",
+      "metaUrl": "http://stream.syntheticfm.com:8040/status-json.xsl",
+      "metaType": "icecast"
+    },
+    {
+      "id": 17,
+      "title": "Synthetic FM (ITA)",
+      "streamUrl": "http://stream.syntheticfm.com:8030/stream",
+      "streamFormat": "mp3",
+      "logo": "logos/synthetic_fm_ita.jpg",
+      "metaUrl": "http://stream.syntheticfm.com:8030/status-json.xsl",
+      "metaType": "icecast"
+    },
+    {
+      "id": 18,
+      "title": "Radio Popolare (ITA)",
+      "streamUrl": "https://livex.radiopopolare.it/radiopop",
+      "streamFormat": "mp3",
+      "logo": "logos/radio_popolare_milano.png",
+      "metaUrl": null,
+      "metaType": "none"
+    }
+  ]
+}

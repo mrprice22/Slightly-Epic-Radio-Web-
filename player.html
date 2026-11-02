@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slightly Epic Radio</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22%3E%3Crect width=%2224%22 height=%2224%22 rx=%225%22 fill=%22%237c6af7%22/%3E%3Ccircle cx=%2212%22 cy=%2212%22 r=%222.5%22 fill=%22white%22/%3E%3Cpath d=%22M16.5 7.5a6.4 6.4 0 0 1 0 9M7.5 16.5a6.4 6.4 0 0 1 0-9%22 stroke=%22white%22 stroke-width=%221.8%22 fill=%22none%22 stroke-linecap=%22round%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="player.css">
+</head>
+<body>
+<main class="player" id="player" data-state="idle" aria-label="Slightly Epic Radio player">
+  <div class="art" aria-hidden="true">
+    <img id="logo" alt="" hidden>
+    <svg class="art-ph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+      <circle cx="12" cy="12" r="2.2"/><path d="M16.2 7.8a6 6 0 0 1 0 8.4M7.8 16.2a6 6 0 0 1 0-8.4M19 5a10 10 0 0 1 0 14M5 19A10 10 0 0 1 5 5"/>
+    </svg>
+  </div>
+
+  <div class="info">
+    <div class="select-wrap">
+      <select id="station" aria-label="Station" disabled>
+        <option>Loading stations…</option>
+      </select>
+      <svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="np" aria-live="polite">
+      <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>
+      <div class="np-track" id="np-track"><span id="np-text">Slightly Epic Radio</span></div>
+    </div>
+  </div>
+
+  <button class="play" id="play" type="button" aria-label="Play" aria-pressed="false" disabled>
+    <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>
+    <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg>
+    <svg class="i-spin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="38 60" stroke-linecap="round"/></svg>
+  </button>
+
+  <div class="vol">
+    <button class="mute" id="mute" type="button" aria-label="Mute">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/>
+        <path class="w1" d="M15 9.5a3.5 3.5 0 0 1 0 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        <path class="w2" d="M17.5 7a7 7 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        <path class="x" d="M16 9.5l5 5m0-5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <input id="volume" type="range" min="0" max="100" step="1" value="80" aria-label="Volume">
+  </div>
+</main>
+<audio id="audio" preload="none"></audio>
+<script src="config.js"></script>
+<script src="player.js"></script>
+</body>
+</html>

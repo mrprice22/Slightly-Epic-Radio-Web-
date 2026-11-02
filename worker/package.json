@@ -1,0 +1,13 @@
+{
+  "name": "slightly-epic-radio-proxy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cloudflare Worker that relays Slightly Epic Radio streams and metadata over https",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.40.0"
+  }
+}

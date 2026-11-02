@@ -1,0 +1,10 @@
+# Worker dependencies / local state
+worker/node_modules/
+worker/.wrangler/
+worker/.dev.vars
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

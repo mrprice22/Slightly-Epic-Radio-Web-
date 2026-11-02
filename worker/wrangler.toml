@@ -1,0 +1,11 @@
+name = "slightly-epic-radio-proxy"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+[vars]
+# The published stations.json (GitHub Pages). The Worker only relays stream /
+# metadata URLs that appear in this file.
+STATIONS_URL = "https://mrprice22.github.io/Slightly-Epic-Radio-Web-/stations.json"
+
+# For local testing (`npm run dev`), .dev.vars overrides this, e.g.:
+#   STATIONS_URL=http://127.0.0.1:8080/stations.json

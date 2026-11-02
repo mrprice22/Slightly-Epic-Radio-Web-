@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slightly Epic Radio Player</title>
+<meta name="description" content="An embeddable internet radio player for the Slightly Epic Radio stations.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22%3E%3Crect width=%2224%22 height=%2224%22 rx=%225%22 fill=%22%237c6af7%22/%3E%3Ccircle cx=%2212%22 cy=%2212%22 r=%222.5%22 fill=%22white%22/%3E%3Cpath d=%22M16.5 7.5a6.4 6.4 0 0 1 0 9M7.5 16.5a6.4 6.4 0 0 1 0-9%22 stroke=%22white%22 stroke-width=%221.8%22 fill=%22none%22 stroke-linecap=%22round%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f6fc; --surface: #ffffff; --border: #e1dff0;
+  --text: #1a1726; --text2: #6b6685; --accent: #7c6af7; --code: #f0eef9;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d0d0f; --surface: #141418; --border: #2a2a36;
+    --text: #e8e6f0; --text2: #9994b0; --code: #1c1c22;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d0d0f; --surface: #141418; --border: #2a2a36;
+  --text: #e8e6f0; --text2: #9994b0; --code: #1c1c22;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Syne', system-ui, sans-serif; line-height: 1.55; }
+.wrap { max-width: 760px; margin: 0 auto; padding: 48px 16px 64px; }
+h1 { font-size: clamp(28px, 6vw, 40px); font-weight: 800; letter-spacing: -.02em; margin: 0 0 6px; }
+h1 span { color: var(--accent); }
+.lede { color: var(--text2); margin: 0 0 36px; font-size: 17px; }
+h2 { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--text2); margin: 40px 0 12px; }
+iframe { display: block; width: 100%; border: 0; }
+.narrow { max-width: 340px; }
+.demo-row { display: grid; gap: 16px; }
+.snippet { position: relative; background: var(--code); border: 1px solid var(--border); border-radius: 12px; }
+pre { margin: 0; padding: 16px 18px; overflow-x: auto; font: 13px/1.6 'JetBrains Mono', ui-monospace, monospace; white-space: pre; }
+.copy { position: absolute; top: 8px; right: 8px; font: 600 12px 'Syne', sans-serif; padding: 6px 12px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; }
+.copy:hover { border-color: var(--accent); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { color: var(--text2); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
+code { font: 13px 'JetBrains Mono', ui-monospace, monospace; background: var(--code); padding: 1px 5px; border-radius: 4px; }
+.stations { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.stn { display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; font-size: 13px; font-weight: 600; min-width: 0; }
+.stn img { width: 34px; height: 34px; border-radius: 6px; object-fit: cover; flex: none; }
+.stn span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+footer { margin-top: 48px; color: var(--text2); font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Slightly Epic <span>Radio</span></h1>
+  <p class="lede">A small radio player you can drop into any website: pick a station, press play.</p>
+
+  <div class="demo-row">
+    <iframe class="slightly-epic-radio" src="player.html" height="84" title="Slightly Epic Radio player" allow="autoplay; encrypted-media" loading="lazy"></iframe>
+    <iframe class="slightly-epic-radio narrow" src="player.html?theme=dark" height="124" title="Slightly Epic Radio player (narrow, dark)" allow="autoplay; encrypted-media" loading="lazy"></iframe>
+  </div>
+
+  <h2>Embed it</h2>
+  <div class="snippet"><button class="copy" data-target="snip1">Copy</button><pre id="snip1"></pre></div>
+  <p style="color:var(--text2);font-size:14px">Use <code>height="84"</code> for embeds 440px wide or more. Narrower embeds stack the volume slider on its own row, so use <code>height="124"</code>.</p>
+
+  <h2>Auto-height (optional)</h2>
+  <p style="color:var(--text2);font-size:14px;margin-top:0">The player reports its height to the parent page. Add this once if you want the iframe to size itself:</p>
+  <div class="snippet"><button class="copy" data-target="snip2">Copy</button><pre id="snip2">&lt;script&gt;
+addEventListener('message', function (e) {
+  if (!e.data || e.data.type !== 'slightly-epic-radio:height') return;
+  document.querySelectorAll('iframe.slightly-epic-radio').forEach(function (f) {
+    if (f.contentWindow === e.source) f.style.height = e.data.height + 'px';
+  });
+});
+&lt;/script&gt;</pre></div>
+
+  <h2>Options</h2>
+  <table>
+    <tr><th>Parameter</th><th>Example</th><th>What it does</th></tr>
+    <tr><td><code>station</code></td><td><code>?station=zen-garden</code></td><td>Starting station, by title (lowercase, dashes) or id. Otherwise the viewer's last station is used.</td></tr>
+    <tr><td><code>theme</code></td><td><code>?theme=dark</code></td><td><code>light</code>, <code>dark</code> or <code>auto</code> (follows the visitor's system, default).</td></tr>
+    <tr><td><code>accent</code></td><td><code>?accent=ff6a3d</code></td><td>Hex color for the play button, slider and equaliser.</td></tr>
+  </table>
+
+  <h2>Stations</h2>
+  <div class="stations" id="stations"></div>
+
+  <footer>Also on Android and Roku. Stations are managed with the Slightly Epic Radio Station Manager.</footer>
+</div>
+<script>
+addEventListener('message', function (e) {
+  if (!e.data || e.data.type !== 'slightly-epic-radio:height') return;
+  document.querySelectorAll('iframe.slightly-epic-radio').forEach(function (f) {
+    if (f.contentWindow === e.source) f.style.height = e.data.height + 'px';
+  });
+});
+(function () {
+  var base = location.href.replace(/[?#].*$/, '').replace(/index\.html$/, '');
+  document.getElementById('snip1').textContent =
+    '<iframe class="slightly-epic-radio"\n' +
+    '        src="' + base + 'player.html"\n' +
+    '        width="100%" height="84" style="border:0;max-width:560px"\n' +
+    '        title="Slightly Epic Radio" allow="autoplay; encrypted-media"></iframe>';
+
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = document.getElementById(btn.dataset.target).textContent;
+      (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject())
+        .then(function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1500); })
+        .catch(function () { btn.textContent = 'Select & copy'; });
+    });
+  });
+
+  fetch('stations.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (d) {
+    var grid = document.getElementById('stations');
+    (d.stations || []).forEach(function (s) {
+      var el = document.createElement('div'); el.className = 'stn';
+      if (s.logo) { var img = document.createElement('img'); img.src = s.logo; img.alt = ''; img.loading = 'lazy'; el.appendChild(img); }
+      var t = document.createElement('span'); t.textContent = s.title; el.appendChild(t);
+      grid.appendChild(el);
+    });
+  }).catch(function () {});
+})();
+</script>
+</body>
+</html>
