@@ -84,13 +84,14 @@ Then open http://127.0.0.1:8080/. `config.js` detects localhost and points at th
 
 ## Known station issues (checked 2026-11-01)
 
-These stations are failing at the source. They're switched **off** in the Station Manager: they stay in the Manager's list but are left out of `stations.json` and hidden in the Android and Roku apps. Tick **Active** in the Manager to bring one back.
+These stations are failing at the source. They're switched **off** in the Station Manager: they stay in the Manager's list but are left out of `stations.json` and hidden in the Android and Roku apps. Tick **Active** in the Manager to bring one back. Stations that work on Android/Roku but not through the proxy can instead be marked **Hide on web player**.
 
 | Station | Problem | Status |
 |---|---|---|
 | K.G.L.W. Bootlegger | Stream returns 404; `gizzradio.live/listen/listen/status-json.xsl` now serves a GitHub Pages 404 | Off |
 | Badlands Classic Rock | `ec3.yesstreaming.net:2040` is down (Cloudflare error 521 from the Worker) | Off |
 | SOL FM | `radiosolfm.bounceme.net:8002` is not reachable | Off |
+| Chill Lounge | Works direct, but its server (Russia) sends to Cloudflare at ~3.4 KB/s vs the ~24 KB/s the 192 kbps stream needs, so it stalls through the proxy | Hidden on web only |
 | Alternative | Stream works; metadata URL `…/7.html` returns "Mount not found", so it shows the station name only | Active |
 
 ## Bandwidth note

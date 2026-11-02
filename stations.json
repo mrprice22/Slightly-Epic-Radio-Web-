@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-02T02:35:56.996Z",
+  "updated": "2026-11-02T02:41:07.394Z",
   "stations": [
     {
       "id": 0,
@@ -72,15 +72,6 @@
       "streamFormat": "mp3",
       "logo": "logos/stacey_radio.jpg",
       "metaUrl": "http://stacey-campbell.com:8001/status-json.xsl",
-      "metaType": "icecast"
-    },
-    {
-      "id": 11,
-      "title": "Chill Lounge",
-      "streamUrl": "http://harddanceradio.ddns.is74.ru:8000/lounge",
-      "streamFormat": "aac",
-      "logo": "logos/chill_lounge_radio.jpg",
-      "metaUrl": "http://harddanceradio.ddns.is74.ru:8000/status-json.xsl",
       "metaType": "icecast"
     },
     {
